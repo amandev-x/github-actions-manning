@@ -1,0 +1,27 @@
+name: Repository Dispatch Example 
+
+on: 
+    repository_dispatch:
+        types:
+            - deploy
+            - build 
+        
+jobs:
+    respond-to-dispatch:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the code
+              uses: actions/checkout@v3
+
+            - name: Print event details
+              run: |
+               echo "Event type: ${{ github.event.action }}"
+               echo "Client Payload: ${{ toJson(github.event.client_payload)}}"
+
+            - name: Deploy if deploy event
+              if: github.event.action == 'deploy'
+              run: |
+                echo "Deploying to ${{ github.event.client_payload.environment }}"
+                echo "Version: ${{ github.event.client_payload.version }}"
+                
+
