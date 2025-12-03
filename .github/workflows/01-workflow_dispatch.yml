@@ -1,0 +1,41 @@
+name: workflow dispatch
+on:
+    workflow_dispatch:
+        inputs:
+            homedrive:
+                description: "Home drive location name"
+                required: true 
+            
+            loglevel:
+                description: "log level"
+                default: "warning"
+                type: choice
+                options:
+                  - info
+                  - warning 
+                  - succeed
+
+            tags:
+                description: "Apply tag after successful test run"
+                required: true 
+                type: boolean 
+
+            environment:
+                description: "Environment to run test against"
+                required: true 
+                type: environment
+
+jobs:
+    echo-inputs:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Printing workflow input values
+              if: ${{ github.event_name == 'workflow_dispatch' }}
+              run: |
+               echo "Home Drive: ${{ inputs.homedrive }}"
+               echo "Log Level: ${{ inputs.loglevel }}"
+               echo "Tag: ${{ inputs.tags }}"
+               echo "Environment: ${{ inputs.environment }}"
+              
+
+
