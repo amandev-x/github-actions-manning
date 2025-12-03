@@ -23,8 +23,7 @@ on:
             environment:
                 description: "Environment to run test against"
                 required: true 
-                type: environment
-
+                type: string
 jobs:
     echo-inputs:
         runs-on: ubuntu-latest
